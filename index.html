@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Flourish Salon by Aqsa Danish - Premium Beauty & Spa Services in Karachi" />
+    <title>Flourish Salon by Aqsa Danish | Luxury Beauty Experience</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              salonpink: {
+                light: '#FFF0F5',
+                DEFAULT: '#FFB6C1',
+                dark: '#E05297'
+              },
+              salongreen: {
+                light: '#F0F7F4',
+                DEFAULT: '#2E7D32',
+                dark: '#1B5E20'
+              },
+              gold: '#D4AF37'
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      [x-cloak] { display: none !important; }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-zinc-800 font-sans antialiased" x-data="{ welcomeOverlay: true, mobileMenu: false, bookingOpen: false, requestModal: false, reqName: '', reqPhone: '', reqService: '', name: '', service: '', date: '' }">
+
+    <div x-show="welcomeOverlay" x-transition.opacity.duration.500ms x-cloak class="fixed inset-0 bg-white/80 backdrop-blur-2xl z-[100] flex flex-col justify-center items-center text-center p-6 text-zinc-900">
+      <div class="max-w-xl bg-white/90 border border-salonpink/30 p-8 md:p-12 rounded-3xl shadow-2xl relative backdrop-blur-xl">
+        <span class="text-3xl animate-bounce inline-block mb-3"></span>
+        <h1 class="text-3xl md:text-5xl font-serif font-bold text-salongreen-dark tracking-wide">WELCOME TO FLOURISH</h1>
+        <p class="text-salonpink-dark font-serif italic text-lg mt-1">by Aqsa Danish</p>
+        <p class="text-zinc-600 text-sm mt-4 leading-relaxed font-medium">Karachi's premier destination for luxury bridal transformations, hair styling, advanced skin therapies, and wellness spa.</p>
+        <button @click="welcomeOverlay = false" class="mt-8 bg-salongreen text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-lg hover:bg-salongreen-dark hover:scale-105 transition transform">
+          Enter Website ✨
+        </button>
+      </div>
+    </div>
+
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-salonpink/30 z-50 shadow-sm transition-all">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="#page1" class="text-2xl font-serif font-bold tracking-widest text-salongreen-dark flex items-center gap-2">
+          <span class="text-salonpink-dark"></span> FLOURISH <span class="text-xs font-sans tracking-normal font-medium text-zinc-500 hidden sm:inline">| BY AQSA DANISH</span>
+        </a>
+        
+        <nav class="hidden md:flex space-x-8 text-xs font-semibold uppercase tracking-wider">
+          <a href="#page1" class="text-zinc-700 hover:text-salonpink-dark transition">Home</a>
+          <a href="#page2" class="text-zinc-700 hover:text-salongreen transition">Services</a>
+          <a href="#page19" class="text-zinc-700 hover:text-salonpink-dark transition">Gallery</a>
+          <a href="#page20" class="text-zinc-700 hover:text-salongreen transition">Branches</a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-3">
+          <button @click="requestModal = true" class="border border-salongreen text-salongreen font-semibold text-xs uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-salongreen-light transition">
+            Request Call
+          </button>
+          <button @click="bookingOpen = true" class="bg-salongreen text-white font-semibold text-xs uppercase tracking-widest px-5 py-2.5 rounded-full hover:bg-salongreen-dark transition shadow">
+            Book Now
+          </button>
+        </div>
+
+        <button @click="mobileMenu = !mobileMenu" class="md:hidden text-salongreen focus:outline-none p-2">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path x-show="mobileMenu" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div x-show="mobileMenu" x-cloak class="md:hidden bg-white border-b border-salonpink/20 px-6 pt-3 pb-6 space-y-4 shadow-xl">
+        <a href="#page1" @click="mobileMenu = false" class="block text-sm font-medium text-zinc-700 uppercase tracking-wider">Home</a>
+        <a href="#page2" @click="mobileMenu = false" class="block text-sm font-medium text-zinc-700 uppercase tracking-wider">Services</a>
+        <a href="#page19" @click="mobileMenu = false" class="block text-sm font-medium text-zinc-700 uppercase tracking-wider">Gallery</a>
+        <a href="#page20" @click="mobileMenu = false" class="block text-sm font-medium text-zinc-700 uppercase tracking-wider">Branches & Contact</a>
+        <div class="grid grid-cols-2 gap-2 pt-2">
+          <button @click="requestModal = true; mobileMenu = false" class="bg-salongreen-light text-salongreen-dark font-semibold py-2.5 rounded-lg text-xs uppercase">Request Call</button>
+          <button @click="bookingOpen = true; mobileMenu = false" class="bg-salonpink-dark text-white font-semibold py-2.5 rounded-lg text-xs uppercase">Quick Booking</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-20">
+
+      <section id="page1" class="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat py-20" style="background-image: url('https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/476898102_23894401223480076_6197995664942813409_n.jpg?stp=dst-jpg_tt6&cstp=mx1066x1332&ctp=s1066x1332&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=2307LiBj3ZUQ7kNvwG-AFJx&_nc_oc=AdpAR-rERgWrZDcBFIapew5WF1bFk5VWhqN5hJh5bFLzm-nYlB7wKlLnRNiAd_bdZFg&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=_04u1RkIrwyZhN28Bd3Rag&_nc_ss=7b2a8&oh=00_AQBhQhYATbGauG_S2si7JlVoJyQmpdyNp6Zth4rXIvWpWw&oe=6A6021C1');">
+        <div class="absolute inset-0 bg-white/70 backdrop-blur-xs"></div>
+        
+        <div class="max-w-4xl border border-white/80 bg-white/80 backdrop-blur-md p-8 md:p-16 rounded-3xl shadow-2xl relative z-10">
+          <span class="inline-block bg-salongreen-light text-salongreen font-bold uppercase tracking-[0.2em] text-xs px-4 py-1.5 rounded-full mb-4">Welcome to Karachi's Premier Beauty Destination</span>
+          <h1 class="text-4xl md:text-6xl font-serif font-bold tracking-tight text-zinc-900 mt-2">FLOURISH SALON</h1>
+          <p class="text-salonpink-dark font-serif italic text-xl mt-2">by Aqsa Danish</p>
+          <p class="mt-6 text-zinc-600 leading-relaxed max-w-2xl mx-auto text-base md:text-lg">Experience luxury bridal transformations, innovative hair artistry, clinical skincare, and serene spa rituals tailored exclusively for you in a sophisticated ambience.</p>
+          <div class="mt-8 flex flex-wrap gap-4 justify-center">
+            <a href="#page2" class="bg-salongreen text-white px-8 py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-salongreen-dark transition rounded-full shadow-lg">Explore Services</a>
+            <button @click="requestModal = true" class="bg-white border border-salonpink-dark text-salonpink-dark px-8 py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-salonpink-light transition rounded-full shadow-sm">Request Callback</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="page2" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://scontent.fkhi22-1.fna.fbcdn.net/v/t51.82787-15/589907236_18402859720192643_6584009525867666413_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1920&ctp=s1440x1920&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=9_FwuEkt_FUQ7kNvwGcxJ-H&_nc_oc=AdrdkM-y7xgV6BMVWzmT_caRX7-cVzwhTn2XlMX0PNoxx234EbmHshuS6C4a_1KBNDs&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=PQnoH77o3o1luZMykHXrug&_nc_ss=7b2a8&oh=00_AQAydzoSU6M2CjP58v5mMvevp3qTXIWtXPEs8YVUvPVBAw&oe=6A5EF2C4');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div>
+            <span class="text-salonpink-dark font-semibold uppercase tracking-wider text-xs">Hair Artistry</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Signature Hair Cuts & Styling</h2>
+            <p class="text-zinc-600 leading-relaxed mb-6 text-base">A perfect haircut defines your unique personal style. Our master stylists specialize in advanced international hair trends including French layers, classic bobs, textured shags, and custom feather cuts.</p>
+            <div class="bg-salongreen-light/60 border-l-4 border-salongreen p-4 rounded-r-lg mb-4">
+              <p class="text-sm text-salongreen-dark font-medium">💡 Pricing starts from PKR 1,500. Complimentary hair wash & blowout session included.</p>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-xl h-80 md:h-96">
+            <img src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/470673918_18356411107192643_5707841502284007783_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=vfHKK2SdycIQ7kNvwGYdEJX&_nc_oc=AdoU-fK_sEBnvIYj1kQPLqllzOcs96tjNNcMcKda_D1c0prYVngA-H7ZqPGFdcnQTOE&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=uxjVvoq5yEzTKd0zHRKC3Q&_nc_ss=7b2a8&oh=00_AQBt-WLpVQsHx5N2VHgEjsPIFDAqv3BoevQBD5iuAQfiSw&oe=6A5FD166" alt="Hair Styling" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+
+      <section id="page3" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/479674578_23932372389682959_6755662295783788537_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=xqCXoAK81MQQ7kNvwGV1_nJ&_nc_oc=AdoiUMkiHJ8I7vz4f9OJ4H0FI_ayRBQCRjpQKAZHQeSBuLx_FAwK-AVpUXa5r5U2QjE&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=1V6inTHU3pC3-sOVTkY7tQ&_nc_ss=7b2a8&oh=00_AQABRgVGEqJdmT1X8_3OVxtraKyAZKanrN9wkLfxfNLuPQ&oe=6A600ECE');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div class="order-2 md:order-1 relative rounded-2xl overflow-hidden shadow-xl h-80 md:h-96">
+            <img src="https://scontent.fkhi17-2.fna.fbcdn.net/v/t39.30808-6/476000937_1163218908494887_9031351729918013883_n.jpg?stp=dst-jpg_tt6&cstp=mx1406x1757&ctp=s1406x1757&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=wQpLMMYb08MQ7kNvwGNuvRp&_nc_oc=AdrvnOuzwCWVu7YpxfEqknzp-wiC3mMi0dyUR369HoDPzR7Uafl54by5eg61fkU3exY&_nc_zt=23&_nc_ht=scontent.fkhi17-2.fna&_nc_gid=QzMb0L7S6puvwqHTDdGM7A&_nc_ss=7b2a8&oh=00_AQCKSFwmWCUzzK60rnd3JaePDY2fo2scctQI4ShDV3QTfg&oe=6A5FC07B" alt="Hair Color Studio" class="w-full h-full object-cover">
+          </div>
+          <div class="order-1 md:order-2">
+            <span class="text-salongreen font-semibold uppercase tracking-wider text-xs">Color Studio</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Advanced Hair Coloring & Highlights</h2>
+            <p class="text-zinc-600 leading-relaxed mb-6 text-base">Bring vibrant life to your hair using ammonia-free formulas from L'Oréal Professionnel, Schwarzkopf, and Wella. From 3D Balayage to soft babylights and flawless root coverage.</p>
+            <div class="grid gap-3 text-sm">
+              <div class="p-3 bg-white rounded-lg shadow-sm border border-salonpink/20 font-medium text-zinc-700">✔️ 3D Metallic Balayage & Ombre Specialization</div>
+              <div class="p-3 bg-white rounded-lg shadow-sm border border-salonpink/20 font-medium text-zinc-700">✔️ Post-Color Deep Bond Protection Treatment</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page4" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/479674578_23932372389682959_6755662295783788537_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=xqCXoAK81MQQ7kNvwGV1_nJ&_nc_oc=AdoiUMkiHJ8I7vz4f9OJ4H0FI_ayRBQCRjpQKAZHQeSBuLx_FAwK-AVpUXa5r5U2QjE&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=1V6inTHU3pC3-sOVTkY7tQ&_nc_ss=7b2a8&oh=00_AQABRgVGEqJdmT1X8_3OVxtraKyAZKanrN9wkLfxfNLuPQ&oe=6A600ECE');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+          <span class="text-salonpink-dark font-semibold uppercase tracking-wider text-xs">Hair Texture</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Keratin, Extenso & Rebonding</h2>
+          <p class="text-zinc-600 leading-relaxed mb-8 text-base md:text-lg">Tame unmanageable frizz and roughness with our elite hair smoothing treatments. Our Brazilian Keratin restores natural shine while professional Extenso and Japanese Rebonding deliver sleek, manageable hair.</p>
+        </div>
+      </section>
+
+      <section id="page5" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div>
+            <span class="text-salongreen font-semibold uppercase tracking-wider text-xs">Skin Care</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Herbal & Whitening Facials</h2>
+            <p class="text-zinc-600 leading-relaxed mb-6 text-base">Rejuvenate your skin with our organic herbal cleansings, gold-infused facials, and deep botanical skin treatments designed to target hyperpigmentation and restore glass-like radiance.</p>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-xl h-80 md:h-96">
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80" alt="Facial Therapy" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+
+      <section id="page6" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1512290900673-7002fffe9353?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div class="order-2 md:order-1 relative rounded-2xl overflow-hidden shadow-xl h-80 md:h-96">
+            <img src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/480597620_23955425110711020_9132929978452352442_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=qAu0-wAfQu0Q7kNvwEuBmwa&_nc_oc=AdpbPqi6tSh_YkZvWmMQ6SDvzRoR84gx5v7hl9JlfHVlQaNstB54cK5IVsO18Zqq2wY&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=66chmkg90sLRFYA-v9kRWQ&_nc_ss=7b2a8&oh=00_AQCJhat_o6TAa5OcLFOyGl1ZXtEn-e8Z0C_y1Q1cvryxDw&oe=6A60269C" alt="Hydra Facial Treatment" class="w-full h-full object-cover">
+          </div>
+          <div class="order-1 md:order-2">
+            <span class="text-salonpink-dark font-semibold uppercase tracking-wider text-xs">Medi-Spa Clinical</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Advanced Hydra Facial</h2>
+            <p class="text-zinc-600 leading-relaxed mb-6 text-base">The ultimate red-carpet treatment. Our 7-in-1 Hydra Facial combines vortex exfoliation, painless blackhead extraction, antioxidant serum infusion, and LED light therapy to refine pores and boost radiance.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="page7" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+          <span class="text-salongreen font-semibold uppercase tracking-wider text-xs">Glamour Lab</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Party & Festive Makeup</h2>
+          <p class="text-zinc-600 leading-relaxed mb-8 text-base md:text-lg">Look stunning at every celebration. From glamorous smoky eyes to dewy minimal aesthetics, our experts create customized looks suited to your outfit and event.</p>
+        </div>
+      </section>
+
+      <section id="page8" class="py-20 px-6 md:px-24 bg-zinc-900 text-white relative overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-zinc-950/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div>
+            <span class="text-gold font-semibold uppercase tracking-wider text-xs">The Grand Day</span>
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mt-2 mb-6">Signature Luxury Bridal Makeup</h2>
+            <p class="text-zinc-300 leading-relaxed mb-6 text-base">Handcrafted under the expert vision of **Aqsa Danish**, our signature bridal packages feature water-resistant HD coverage, intricate hair styling, draping, and luxury lash applications.</p>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl h-96 border border-zinc-700">
+            <img src="https://scontent.fkhi17-2.fna.fbcdn.net/v/t39.30808-6/482340211_24075025198751010_8131228316567902075_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1800&ctp=s1440x1800&_nc_cat=102&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=cJZAupbh_poQ7kNvwHaqzfn&_nc_oc=AdqZjLnhh1yETYFSpEXQVcdDQFf6aEbGFXCq6LAqEu_8SAzbYTgOpHba-GqKA6Uprlg&_nc_zt=23&_nc_ht=scontent.fkhi17-2.fna&_nc_gid=l_cEu5gAAhdaP0_ULmhjyA&_nc_ss=7b2a8&oh=00_AQA68tJ3B02afZTsOX2G2P93Slp44jK4BxB2h6C4-Rxrlw&oe=6A603446" alt="Bridal Transformation" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+
+      <section id="page9" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+          <span class="text-salongreen font-semibold uppercase tracking-wider text-xs">Traditional Art</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Bridal & Casual Mehndi</h2>
+          <p class="text-zinc-600 leading-relaxed mb-6 text-base md:text-lg">Adorn your hands with intricate traditional Rajasthani, Arabic, and contemporary bridal henna patterns using 100% organic, chemical-free cones for rich dark stains.</p>
+        </div>
+      </section>
+
+      <section id="page10" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div class="relative rounded-2xl overflow-hidden shadow-xl h-80 md:h-96">
+            <img src="https://scontent.fkhi17-2.fna.fbcdn.net/v/t1.6435-9/119184210_4019515154728644_8768791987552994503_n.jpg?stp=dst-jpg_tt6&cstp=mx1125x2000&ctp=s1125x2000&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=MZWpZBD1rZMQ7kNvwGnzGpo&_nc_oc=AdqWuugBh_7ou3j9UmPcOQctXTACLA6H55xdbt5hea8PBCs4e50vi11qP6go8M__2Jo&_nc_zt=23&_nc_ht=scontent.fkhi17-2.fna&_nc_gid=Tj0qUP0RQ2jSGmUSWCb9yg&_nc_ss=7b2a8&oh=00_AQBYyX3yWyL6W4PglsLMbRftML-dKDvFZSFHY1OTNYcq9Q&oe=6A81DA08" alt="Mani Pedi" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <span class="text-salonpink-dark font-semibold uppercase tracking-wider text-xs">Hand & Feet Care</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2 mb-6">Whitening Mani-Pedi Spa</h2>
+            <p class="text-zinc-600 leading-relaxed mb-6 text-base">Pamper your hands and feet with warm essential oil soaks, exfoliation, paraffin wax treatments, and relaxing reflexology massage using premium O.P.I care products.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="page11" class="py-16 px-6 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-2xl mx-auto text-center relative z-10">
+          <h3 class="text-2xl font-serif font-bold text-salongreen-dark">Acrylic Extensions & Custom Nail Art</h3>
+          <p class="text-zinc-500 mt-2">Luxury 3D nail art, chrome finishes, and long-lasting gel polish options.</p>
+        </div>
+      </section>
+
+      <section id="page12" class="py-16 px-6 relative bg-cover bg-center bg-no-repeat border-b border-zinc-100" style="background-image: url('https://scontent.fkhi17-2.fna.fbcdn.net/v/t39.30808-6/487402946_24202266892693506_5640496046680415281_n.jpg?stp=dst-jpg_tt6&cstp=mx1283x711&ctp=s1283x711&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=tXQWKax-sE0Q7kNvwEbBJoR&_nc_oc=Adqh0q85HYIqc5V0pOQhJJ-zNyfJnQnt3k9LACPnKEggJXAkazoIl6VE2TkwHqgWqGw&_nc_zt=23&_nc_ht=scontent.fkhi17-2.fna&_nc_gid=SnEV3ngOUo7bLJkHEzXpFQ&_nc_ss=7b2a8&oh=00_AQBT8s8YIosHS19q15B4qwyibvvKEEzkh_1thIUF_KLj3A&oe=6A602E71');">
+        <div class="absolute inset-0 bg-white/85"></div>
+        
+        <div class="max-w-2xl mx-auto text-center relative z-10">
+          <h3 class="text-2xl font-serif font-bold text-salongreen-dark">Rica & Fruit Liposoluble Waxing</h3>
+          <p class="text-zinc-500 mt-2">100% hygienic single-use waxing for smooth, hair-free skin.</p>
+        </div>
+      </section>
+
+      <section id="page19" class="py-20 px-6 md:px-24 bg-white border-b border-zinc-100">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <span class="text-salongreen font-semibold uppercase tracking-wider text-xs">Portfolio</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2">Our Work Gallery</h2>
+          </div>
+          
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="rounded-2xl overflow-hidden shadow-lg bg-white border border-zinc-100 flex flex-col group">
+              <div class="h-64 overflow-hidden">
+                <img src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/481008170_1178217106995067_851836889566643320_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1440&ctp=s1440x1440&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KV7JqA67f9EQ7kNvwFoVbHe&_nc_oc=AdqO2HgFZSI2fHUnmrnPa01F7zuziE2gDk7NydKyJ6Y0vRvTHb5OPgFYJFoeiCZ4kxQ&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=dSAzIN0O3nw5gZx81M1wSw&_nc_ss=7b2a8&oh=00_AQC2ZNQJ5ye2INBMqmStsqVR7PSvaAMnaiQvQBFyMA_fXw&oe=6A605541" alt="Bridal Shoot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              </div>
+              <div class="p-5">
+                <h3 class="font-serif font-bold text-lg text-zinc-900">My Portfolio</h3>
+                <p class="text-xs text-zinc-500 mt-1">Signature HD Makeup Transformations</p>
+              </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-lg bg-white border border-zinc-100 flex flex-col group">
+              <div class="h-64 overflow-hidden">
+                <img src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t1.6435-9/122636410_4148796065133885_7501978077847937970_n.jpg?stp=dst-jpg_tt6&cstp=mx1000x1000&ctp=s1000x1000&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=-pS7-gz8KpMQ7kNvwHA_VCv&_nc_oc=AdpCF-q54cYBM92vKJhpo4gd1XM8HIX2yRpku2ZflQqhWF8qdnZJPQPxbljXWiPVM3k&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=XXtHklxi3MWbnWxbgQaOwg&_nc_ss=7b2a8&oh=00_AQBM-sv_tOAwpxGGPwkF653k1OX3HErLnePB5XTHxqYR5Q&oe=6A81D574" alt="Hair Color" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              </div>
+              <div class="p-5">
+                <h3 class="font-serif font-bold text-lg text-zinc-900">My Locations</h3>
+                <p class="text-xs text-zinc-500 mt-1">Open 3 Branches</p>
+              </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-lg bg-white border border-zinc-100 flex flex-col group">
+              <div class="h-64 overflow-hidden">
+                <img src="https://scontent.fkhi17-2.fna.fbcdn.net/v/t39.30808-6/475972777_1163216565161788_658521656295726459_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1769&ctp=s1440x1769&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=CfanKi1qs9QQ7kNvwGSysA3&_nc_oc=Adr_2xHvdAGWuUW7FGd-AY4Aq6URcv2zqIzu3bDwvcDvFp3eNUqP-SCxkNSt5bMEZLo&_nc_zt=23&_nc_ht=scontent.fkhi17-2.fna&_nc_gid=QroOfg-TFDNxnI2qJHCYDA&_nc_ss=7b2a8&oh=00_AQBteyfQeqUGuD4O8bG2xwYouKwn191L79K1_4HnANiiSA&oe=6A605785" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              </div>
+              <div class="p-5">
+                <h3 class="font-serif font-bold text-lg text-zinc-900">Bride customer</h3>
+                <p class="text-xs text-zinc-500 mt-1">Acrylic Gel Art & Chrome Finishes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page20" class="py-20 px-6 md:px-24 relative bg-cover bg-center bg-no-repeat" style="background-image: url('https://scontent.fkhi22-1.fna.fbcdn.net/v/t39.30808-6/487429986_24202266639360198_3321956090853067376_n.jpg?stp=dst-jpg_tt6&cstp=mx1283x1257&ctp=s1283x1257&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=eocD-bLggUcQ7kNvwHH1b3h&_nc_oc=AdqHqSwFk8cMOCPEH3Jj5jlnxa_WuopQIGkAMBvgAoKmSJANH5GjgGutijQR0uM-xvA&_nc_zt=23&_nc_ht=scontent.fkhi22-1.fna&_nc_gid=U70Xmh41mAUDmVCbWXam4w&_nc_ss=7b2a8&oh=00_AQAmCyjAwY54uM6259gq8n3RgWajPJPXNIZtGAjZWSngcQ&oe=6A602A47');">
+        <div class="absolute inset-0 bg-white/90"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+          <div class="text-center mb-12">
+            <span class="text-salonpink-dark font-semibold uppercase tracking-wider text-xs">Reach Out</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mt-2">Karachi Branches & Appointments</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8 text-sm mb-12">
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-md border border-zinc-100">
+              <h3 class="font-serif font-bold text-xl text-zinc-900">Johar Branch</h3>
+              <p class="text-zinc-500 mt-3 leading-relaxed">R-6, Block-1, near Continental Bakery, Gulistan-e-Johar, Karachi.</p>
+              <a href="tel:02134613005" class="mt-4 inline-block font-semibold text-salongreen hover:underline">📞 0213 4613 005</a>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-md border border-zinc-100">
+              <h3 class="font-serif font-bold text-xl text-zinc-900">Gulshan Branch</h3>
+              <p class="text-zinc-500 mt-3 leading-relaxed">Plot #217, Shop #2, KDA Market, Block-3, Gulshan-e-Iqbal, Karachi.</p>
+              <a href="tel:02134833323" class="mt-4 inline-block font-semibold text-salongreen hover:underline">📞 0213 4833 323</a>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-md border border-zinc-100">
+              <h3 class="font-serif font-bold text-xl text-zinc-900">North Nazimabad</h3>
+              <p class="text-zinc-500 mt-3 leading-relaxed">Block H, near Shipowner College, North Nazimabad, Karachi.</p>
+              <a href="tel:0213664878" class="mt-4 inline-block font-semibold text-salongreen hover:underline">📞 0213 664 878</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div x-show="requestModal" x-cloak class="fixed inset-0 bg-black/ black backdrop-blur-sm z-50 flex items-center justify-center p-4" @click.away="requestModal = false">
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative">
+        <button @click="requestModal = false" class="absolute top-5 right-5 text-zinc-400 hover:text-zinc-600 font-bold text-2xl">&times;</button>
+        <span class="text-salongreen font-semibold uppercase text-xs tracking-wider">Free Callback Request</span>
+        <h3 class="text-xl font-serif font-bold text-zinc-900 mt-1">Request a Consultation</h3>
+        <p class="text-xs text-zinc-500 mt-1 mb-6">Apna number dein, hamari salon representative aapko call kar ke details share karegi.</p>
+        
+        <form class="space-y-4" @submit.prevent="window.open('https://wa.me/923333927305?text=Callback%20Request%20|%20Name:%20' + encodeURIComponent(reqName) + '%20|%20Phone:%20' + encodeURIComponent(reqPhone) + '%20|%20Service:%20' + encodeURIComponent(reqService), '_blank'); requestModal = false;">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-zinc-500 mb-1">Your Name</label>
+            <input x-model="reqName" type="text" required placeholder="e.g. Sara Ali" class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salongreen">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-zinc-500 mb-1">Phone / WhatsApp Number</label>
+            <input x-model="reqPhone" type="tel" required placeholder="03XX-XXXXXXX" class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salongreen">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-zinc-500 mb-1">Required Service</label>
+            <input x-model="reqService" type="text" placeholder="e.g. Bridal Makeup / Keratin" class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salongreen">
+          </div>
+          <button type="submit" class="w-full bg-salongreen text-white font-bold uppercase tracking-wider py-4 rounded-xl shadow-lg text-xs hover:bg-salongreen-dark transition">
+            Submit Request 📩
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div x-show="bookingOpen" x-cloak class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" @click.away="bookingOpen = false">
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative">
+        <button @click="bookingOpen = false" class="absolute top-5 right-5 text-zinc-400 hover:text-zinc-600 font-bold text-2xl">&times;</button>
+        <h3 class="text-xl font-serif font-bold text-zinc-900 border-b border-zinc-100 pb-3">Schedule Appointment</h3>
+        
+        <form class="space-y-4 mt-6" @submit.prevent="window.open('https://wa.me/923333927305?text=Name:%20' + encodeURIComponent(name) + '%20|%20Service:%20' + encodeURIComponent(service) + '%20|%20Date:%20' + encodeURIComponent(date), '_blank')">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Full Name</label>
+            <input x-model="name" type="text" required placeholder="e.g., Ayesha Khan" class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salonpink-dark" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Service</label>
+            <select x-model="service" required class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salonpink-dark text-zinc-700">
+              <option value="">-- Select Service --</option>
+              <option value="Luxury Bridal Makeup">Luxury Bridal Makeup</option>
+              <option value="Hair Cut & Blowout">Hair Cut & Blowout</option>
+              <option value="Advanced Hydra Facial">Advanced Hydra Facial</option>
+              <option value="Keratin Treatment">Keratin Treatment</option>
+              <option value="Manicure & Pedicure Spa">Manicure & Pedicure Spa</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Preferred Date</label>
+            <input x-model="date" type="date" required class="w-full bg-slate-50 border border-zinc-200 p-3.5 text-sm rounded-xl focus:outline-none focus:border-salonpink-dark text-zinc-700" />
+          </div>
+          <button type="submit" class="w-full bg-salongreen text-white font-bold uppercase tracking-widest py-4 text-xs hover:bg-salongreen-dark transition rounded-xl shadow-lg mt-2">
+            Confirm via WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="bg-zinc-950 text-zinc-400 text-sm border-t border-zinc-800 pt-16 pb-8 px-6 md:px-12">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-zinc-800">
+        
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-white font-serif font-bold text-xl tracking-widest">
+            <span class="text-salonpink-dark"></span> FLOURISH SALON
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            By Aqsa Danish — Karachi's premier destination for luxury bridal makeovers, clinical skincare, innovative hair styling, and relaxing spa sessions.
+          </p>
+          <div class="pt-2">
+            <button @click="bookingOpen = true" class="bg-salongreen text-white font-semibold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-salongreen-dark transition shadow">
+              Book Appointment
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-serif font-semibold uppercase tracking-wider text-xs mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#page1" class="hover:text-gold transition">Home</a></li>
+            <li><a href="#page2" class="hover:text-gold transition">Hair Styling & Cuts</a></li>
+            <li><a href="#page3" class="hover:text-gold transition">Hair Color Studio</a></li>
+            <li><a href="#page6" class="hover:text-gold transition">Clinical Hydra Facial</a></li>
+            <li><a href="#page8" class="hover:text-gold transition">Luxury Bridal Packages</a></li>
+            <li><a href="#page19" class="hover:text-gold transition">Work Gallery</a></li>
+            <li><a href="#page20" class="hover:text-gold transition">Karachi Branches</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-serif font-semibold uppercase tracking-wider text-xs mb-4">Popular Services</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#page8" class="hover:text-salonpink transition">HD Bridal Makeup</a></li>
+            <li><a href="#page4" class="hover:text-salonpink transition">Keratin & Extenso</a></li>
+            <li><a href="#page5" class="hover:text-salonpink transition">Janssen Whitening Facial</a></li>
+            <li><a href="#page10" class="hover:text-salonpink transition">O.P.I Mani-Pedi Spa</a></li>
+            <li><a href="#page11" class="hover:text-salonpink transition">Acrylic Extensions & Gel Art</a></li>
+            <li><a href="#page12" class="hover:text-salonpink transition">Rica Liposoluble Waxing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-serif font-semibold uppercase tracking-wider text-xs mb-4">Karachi Branches</h4>
+          <div class="space-y-3 text-xs">
+            <div>
+              <p class="text-zinc-200 font-medium">📍 Johar Branch:</p>
+              <p class="text-zinc-500">R-6, Block-1, Gulistan-e-Johar</p>
+              <a href="tel:02134613005" class="text-salongreen hover:underline font-semibold">0213 4613 005</a>
+            </div>
+            <div>
+              <p class="text-zinc-200 font-medium">📍 Gulshan Branch:</p>
+              <p class="text-zinc-500">Block-3, KDA Market, Gulshan</p>
+              <a href="tel:02134833323" class="text-salongreen hover:underline font-semibold">0213 4833 323</a>
+            </div>
+            <div>
+              <p class="text-zinc-200 font-medium">📍 North Nazimabad:</p>
+              <p class="text-zinc-500">Block H, near Shipowner College</p>
+              <a href="tel:0213664878" class="text-salongreen hover:underline font-semibold">0213 664 878</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-500 gap-4 text-center md:text-left">
+        <p>&copy; 2026 Flourish Salon by Aqsa Danish. All rights reserved.</p>
+        <div class="flex gap-6 text-zinc-400">
+          <a href="https://wa.me/923333927305" target="_blank" class="hover:text-salongreen transition">WhatsApp Booking</a>
+          <button @click="requestModal = true" class="hover:text-salongreen transition">Request Callback</button>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
